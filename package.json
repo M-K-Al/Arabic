@@ -1,0 +1,7 @@
+{
+  "name": "Arabic",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2"
+  }
+}

@@ -1,0 +1,27 @@
+.arrow-bottom:before {
+    background-color: rgb(75 85 99);
+    opacity: 1;
+    content: "";
+    left: calc(50% - 10px);
+    transform: rotate(45deg);
+    bottom: -8px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: -10;
+}
+
+@keyframes bounce {
+    50% {
+        transform: scale(10%);
+        animation-timing-function: cubic-bezier(0,0,0,1);
+    }
+    0%, 100% {
+        transform: none;
+        animation-timing-function: cubic-bezier(0,0,0,0);
+    }
+}
+.bounce-once {
+    animation: bounce 500ms ease-in-out;
+    animation-iteration-count: 1;
+}
