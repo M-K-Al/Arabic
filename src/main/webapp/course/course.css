@@ -1,0 +1,13 @@
+.arrow-bottom:after {
+    background-color: inherit;
+    opacity: 1;
+    content: "";
+    left: calc(50% - 10px);
+    transform: rotate(45deg);
+    bottom: -8px;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    z-index: -10;
+    box-shadow: 6px 6px 4px -1px rgba(17, 24, 39, 0.5);
+}

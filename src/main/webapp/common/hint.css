@@ -1,0 +1,27 @@
+.arrow-right:after {
+    background-color: inherit;
+    opacity: 1;
+    content: "";
+    top: calc(50% - 10px);
+    transform: rotate(45deg);
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: -10;
+    box-shadow: 4px 4px 4px 1px rgba(17, 24, 39, 0.3);
+}
+
+.arrow-left:after {
+    background-color: inherit;
+    opacity: 1;
+    content: "";
+    top: calc(50% - 10px);
+    transform: rotate(45deg);
+    left: -8px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: -10;
+    box-shadow: 4px 4px 4px 1px rgba(17, 24, 39, 0.3);
+}

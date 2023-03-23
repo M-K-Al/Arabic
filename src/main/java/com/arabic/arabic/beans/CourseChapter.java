@@ -1,5 +1,6 @@
 package com.arabic.arabic.beans;
 
-public record CourseChapter(String name, CourseSection[] chapters) {
+import com.arabic.arabic.beans.section.CourseSection;
 
+public record CourseChapter(String name, CourseSection[] sections) {
 }

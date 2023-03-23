@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-@WebServlet(value = "")
-public class IndexServlet extends HttpServlet {
+@WebServlet(value = "/signup")
+public class SignupServlet extends HttpServlet {
     @Override
     protected void doGet(@NotNull HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("signup/signup.jsp").forward(req, resp);
     }
 }

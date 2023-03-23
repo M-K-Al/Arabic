@@ -1,7 +1,8 @@
-// noinspection JSUnresolvedVariable,JSUnresolvedFunction
-
+let streakCounter = 0, levelTemp;
+const streakLevels = ["#bcbcbc", "#44ff44", "#55dd55", "#cc44cc", "#b40000"]
+const streakCount = $("#streak-count").css("background-color", streakLevels[0]);
+// noinspection JSUnresolvedVariable,JSUnusedGlobalSymbols
 const chart = Highcharts.chart('chart-container', {
-    height: 40,
     tooltip: {
         hideDelay: 50,
         outside: true,
@@ -50,7 +51,7 @@ const chart = Highcharts.chart('chart-container', {
             step: 1,
             style: {
                 fontWeight: 'bold',
-                fontSize: '18px'
+                fontSize: '16px'
             },
         },
     },
@@ -130,41 +131,39 @@ $(".one-click-card").keyup(function (event) {
     const answer = parent.attr("answer");
 
     let letterIndex = chart.xAxis[0].categories.findIndex(value => value === letter);
-    if (letterIndex === -1) letterIndex = chart.xAxis[0].categories.push(letter) - 1;
+    if (letterIndex === -1) {
+        letterIndex = chart.xAxis[0].categories.push(letter) - 1;
+        $("#chart-container").css("height", "+=16");
+        chart.reflow();
+    }
 
     if (letter === answer) {
         if (parent.attr("expired") !== "") {
+            streakCount.text(++streakCounter).css("background-color", streakLevels[(levelTemp = streakCounter / 10) < streakLevels.length ? levelTemp : streakLevels.length - 1]);
+
             const val = chart.series[0].data.find(value => value?.x === letterIndex && value.id === 0);
-            if (val) {
-                val.update({y: val.y + 1});
-            } else {
-                $("#chart-container").css("height", "+=16");
-                chart.reflow();
-                chart.series[0].addPoint({x: letterIndex, y: 1, color: "#23CC88", id: 0});
-            }
+            if (val) val.update({y: val.y + 1});
+            else chart.series[0].addPoint({x: letterIndex, y: 1, color: "#23CC88", id: 0});
         }
     } else {
+        streakCount.text(streakCounter = 0).css("background-color", streakLevels[0]);
+
         const val = chart.series[0].data.find(value => value?.x === letterIndex && value.id === 2);
-        if (val) {
-            val.update({y: val.y + 1});
-        } else {
-            $("#chart-container").css("height", "+=16");
-            chart.reflow();
-            chart.series[0].addPoint({x: letterIndex, y: 1, color: "#FFBF40", id: 2});
-        }
+        if (val) val.update({y: val.y + 1});
+        else chart.series[0].addPoint({x: letterIndex, y: 1, color: "#FFBF40", id: 2});
 
         let answerIndex = chart.xAxis[0].categories.findIndex(value => value === answer);
-        if (answerIndex === -1) answerIndex = chart.xAxis[0].categories.push(answer) - 1;
-
-        const answerVal = chart.series[0].data.find(value => value?.x === answerIndex && value.id === 1);
-        if (answerVal) {
-            updateList.push(answerVal);
-        } else {
+        if (answerIndex === -1) {
+            answerIndex = chart.xAxis[0].categories.push(answer) - 1;
             $("#chart-container").css("height", "+=16");
             chart.reflow();
-            chart.series[0].addPoint({x: answerIndex, y: 1, color: "#F6666D", id: 1}, false);
         }
+
+        const answerVal = chart.series[0].data.find(value => value?.x === answerIndex && value.id === 1);
+        if (answerVal) updateList.push(answerVal);
+        else chart.series[0].addPoint({x: answerIndex, y: 1, color: "#F6666D", id: 1}, false);
     }
+
     if (letter === answer) {
         $(this).addClass("!bg-green-300 scale-150 z-50").siblings().addClass("w-0 text-xs");
         setTimeout(() => $(this).siblings().hide(), 100);
@@ -196,6 +195,7 @@ $(".one-click-card").keyup(function (event) {
 function forceRedraw(element) {
     const display = element.style.display;
     element.style.display = 'none';
+    // noinspection JSUnusedLocalSymbols
     const _ = element.offsetHeight;
     element.style.display = display;
 }
